@@ -3,10 +3,10 @@ if not game:IsLoaded() then
 game.Loaded:Wait()
 end
 
-local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Chaosscripter/Riotscripter/main/Orion%20Library%202")))()
+local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/shlexware/Orion/main/source")))()
 OrionLib:MakeNotification({
 Name = "Super Saiyan Simulator 2",
-Content = "Scripted By Riotscripter!",
+Content = "Scripted By Midnight Hub!",
 Image = "rbxassetid://4483345998",
 Time = 5
 })
@@ -141,12 +141,12 @@ end)
 end
 
 local Window = OrionLib:MakeWindow({
-Name = "Riotscripter | Super Saiyan Simulator 2 [" .. os.date("%Y") .. "]",
+Name = "Midnight Hub | Super Saiyan Simulator 2 [" .. os.date("%Y") .. "]",
 HidePremium = false,
 SaveConfig = false,
-ConfigFolder = "Riotscripter",
+ConfigFolder = "Midnight Hub",
 IntroEnabled = true,
-IntroText = "Welcome To Riotscripter's Super Saiyan Simulator 2 Gui.",
+IntroText = "Welcome To Midnight Hub's Super Saiyan Simulator 2 Gui.",
 })
 
 local Tab = Window:MakeTab({
@@ -693,9 +693,9 @@ local Section = Tab:AddSection({
 Name = "Credits",
 })
 
-Tab:AddLabel("Script is made by Riotscripter")
-Tab:AddLabel("Scripted by Riotscripter!")
-Tab:AddLabel("UI Library by Riotscripter!")
+Tab:AddLabel("Script is made by Midnight Hub")
+Tab:AddLabel("Scripted by Midnight Hub!")
+Tab:AddLabel("UI Library by Midnight Hub!")
 Tab:AddLabel("Credits to Chaosscripter!")
 
 Tab:AddParagraph("Info","Tap The Button To Copy My Social And Invite Links!")
@@ -705,8 +705,8 @@ Tab:AddButton({
 Name = "Discord",
 Callback = function()
 setclipboard("https://discord.gg/kKaZEfW7zv")
-print("Riotscripter: Copied Discord Server Invite to Clipboard.")
-OrionLib:MakeNotification({Name = "Riotscripter", Content = "Copied Discord Server Invite to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
+print("Midnight Hub: Copied Discord Server Invite to Clipboard.")
+OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Discord Server Invite to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
 end
 })
 
@@ -714,8 +714,8 @@ Tab:AddButton({
 Name = "Youtube",
 Callback = function()
 setclipboard("https://m.youtube.com/channel/UCvXEiClhdiICCgSVzkEIT3A")
-print("Riotscripter: Copied Youtube Channel Link to Clipboard.")
-OrionLib:MakeNotification({Name = "Riotscripter", Content = "Copied Youtube Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
+print("Midnight Hub: Copied Youtube Channel Link to Clipboard.")
+OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Youtube Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
 end
 })
 
@@ -723,8 +723,8 @@ Tab:AddButton({
 Name = "Github",
 Callback = function()
 setclipboard("https://github.com/Chaosscripter")
-print("Riotscripter: Copied Github Channel Link to Clipboard.")
-OrionLib:MakeNotification({Name = "Riotscripter", Content = "Copied Github Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
+print("Midnight Hub: Copied Github Channel Link to Clipboard.")
+OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Github Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
 end
 })
 
@@ -741,10 +741,10 @@ if not game:IsLoaded() then
 game.Loaded:Wait()
 end
 
-local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Chaosscripter/Riotscripter/main/Orion%20Library%202")))()
+local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Chaosscripter/Midnight Hub/main/Orion%20Library%202")))()
 OrionLib:MakeNotification({
 Name = "Super Saiyan Simulator 2",
-Content = "Scripted By Riotscripter!",
+Content = "Scripted By Midnight Hub!",
 Image = "rbxassetid://4483345998",
 Time = 5
 })
@@ -879,12 +879,12 @@ end)
 end
 
 local Window = OrionLib:MakeWindow({
-Name = "Riotscripter | Super Saiyan Simulator 2 [" .. os.date("%Y") .. "]",
+Name = "Midnight Hub | Super Saiyan Simulator 2 [" .. os.date("%Y") .. "]",
 HidePremium = false,
 SaveConfig = false,
-ConfigFolder = "Riotscripter",
+ConfigFolder = "Midnight Hub",
 IntroEnabled = true,
-IntroText = "Welcome To Riotscripter's Super Saiyan Simulator 2 Gui.",
+IntroText = "Welcome To Midnight Hub's Super Saiyan Simulator 2 Gui.",
 })
 
 local Tab = Window:MakeTab({
@@ -1431,9 +1431,9 @@ local Section = Tab:AddSection({
 Name = "Credits",
 })
 
-Tab:AddLabel("Script is made by Riotscripter")
-Tab:AddLabel("Scripted by Riotscripter!")
-Tab:AddLabel("UI Library by Riotscripter!")
+Tab:AddLabel("Script is made by Midnight Hub")
+Tab:AddLabel("Scripted by Midnight Hub!")
+Tab:AddLabel("UI Library by Midnight Hub!")
 Tab:AddLabel("Credits to Chaosscripter!")
 
 Tab:AddParagraph("Info","Tap The Button To Copy My Social And Invite Links!")
@@ -1443,8 +1443,8 @@ Tab:AddButton({
 Name = "Discord",
 Callback = function()
 setclipboard("https://discord.gg/kKaZEfW7zv")
-print("Riotscripter: Copied Discord Server Invite to Clipboard.")
-OrionLib:MakeNotification({Name = "Riotscripter", Content = "Copied Discord Server Invite to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
+print("Midnight Hub: Copied Discord Server Invite to Clipboard.")
+OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Discord Server Invite to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
 end
 })
 
@@ -1452,8 +1452,8 @@ Tab:AddButton({
 Name = "Youtube",
 Callback = function()
 setclipboard("https://m.youtube.com/channel/UCvXEiClhdiICCgSVzkEIT3A")
-print("Riotscripter: Copied Youtube Channel Link to Clipboard.")
-OrionLib:MakeNotification({Name = "Riotscripter", Content = "Copied Youtube Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
+print("Midnight Hub: Copied Youtube Channel Link to Clipboard.")
+OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Youtube Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
 end
 })
 
@@ -1461,8 +1461,8 @@ Tab:AddButton({
 Name = "Github",
 Callback = function()
 setclipboard("https://github.com/Chaosscripter")
-print("Riotscripter: Copied Github Channel Link to Clipboard.")
-OrionLib:MakeNotification({Name = "Riotscripter", Content = "Copied Github Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
+print("Midnight Hub: Copied Github Channel Link to Clipboard.")
+OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Github Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
 end
 })
 
@@ -1479,10 +1479,10 @@ if not game:IsLoaded() then
 game.Loaded:Wait()
 end
 
-local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Chaosscripter/Riotscripter/main/Orion%20Library%202")))()
+local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Chaosscripter/Midnight Hub/main/Orion%20Library%202")))()
 OrionLib:MakeNotification({
 Name = "Super Saiyan Simulator 2",
-Content = "Scripted By Riotscripter!",
+Content = "Scripted By Midnight Hub!",
 Image = "rbxassetid://4483345998",
 Time = 5
 })
@@ -1617,12 +1617,12 @@ end)
 end
 
 local Window = OrionLib:MakeWindow({
-Name = "Riotscripter | Super Saiyan Simulator 2 [" .. os.date("%Y") .. "]",
+Name = "Midnight Hub | Super Saiyan Simulator 2 [" .. os.date("%Y") .. "]",
 HidePremium = false,
 SaveConfig = false,
-ConfigFolder = "Riotscripter",
+ConfigFolder = "Midnight Hub",
 IntroEnabled = true,
-IntroText = "Welcome To Riotscripter's Super Saiyan Simulator 2 Gui.",
+IntroText = "Welcome To Midnight Hub's Super Saiyan Simulator 2 Gui.",
 })
 
 local Tab = Window:MakeTab({
@@ -2169,9 +2169,9 @@ local Section = Tab:AddSection({
 Name = "Credits",
 })
 
-Tab:AddLabel("Script is made by Riotscripter")
-Tab:AddLabel("Scripted by Riotscripter!")
-Tab:AddLabel("UI Library by Riotscripter!")
+Tab:AddLabel("Script is made by Midnight Hub")
+Tab:AddLabel("Scripted by Midnight Hub!")
+Tab:AddLabel("UI Library by Midnight Hub!")
 Tab:AddLabel("Credits to Chaosscripter!")
 
 Tab:AddParagraph("Info","Tap The Button To Copy My Social And Invite Links!")
@@ -2181,8 +2181,8 @@ Tab:AddButton({
 Name = "Discord",
 Callback = function()
 setclipboard("https://discord.gg/kKaZEfW7zv")
-print("Riotscripter: Copied Discord Server Invite to Clipboard.")
-OrionLib:MakeNotification({Name = "Riotscripter", Content = "Copied Discord Server Invite to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
+print("Midnight Hub: Copied Discord Server Invite to Clipboard.")
+OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Discord Server Invite to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
 end
 })
 
@@ -2190,8 +2190,8 @@ Tab:AddButton({
 Name = "Youtube",
 Callback = function()
 setclipboard("https://m.youtube.com/channel/UCvXEiClhdiICCgSVzkEIT3A")
-print("Riotscripter: Copied Youtube Channel Link to Clipboard.")
-OrionLib:MakeNotification({Name = "Riotscripter", Content = "Copied Youtube Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
+print("Midnight Hub: Copied Youtube Channel Link to Clipboard.")
+OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Youtube Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
 end
 })
 
@@ -2199,8 +2199,8 @@ Tab:AddButton({
 Name = "Github",
 Callback = function()
 setclipboard("https://github.com/Chaosscripter")
-print("Riotscripter: Copied Github Channel Link to Clipboard.")
-OrionLib:MakeNotification({Name = "Riotscripter", Content = "Copied Github Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
+print("Midnight Hub: Copied Github Channel Link to Clipboard.")
+OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Github Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
 end
 })
 
