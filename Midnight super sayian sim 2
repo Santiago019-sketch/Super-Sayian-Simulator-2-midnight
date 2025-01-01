@@ -1,141 +1,277 @@
--- Check if we're in the correct game
-local GAME_ID = 16784977282
+-- Configuration
+local CONFIG = {
+    GAME_ID = 16784977282,
+    UI = {
+        NAME = "Midnight Hub - Super Saiyan Simulator 2",
+        NOTIFICATION_DURATION = 5,
+        ICON = "rbxassetid://4483345998"
+    },
+    MOBS = {
+        EXCLUDED = {"Tutorial Dummy"},
+        OFFSET_POSITIONS = {
+            POSITION_1 = Vector3.new(3, 0, 0),
+            POSITION_2 = Vector3.new(0, 0, -3),
+            POSITION_3 = Vector3.new(3, 0, 0),
+            POSITION_4 = Vector3.new(0, 0, -3)
+        }
+    }
+}
 
-if game.PlaceId ~= GAME_ID then
-    return
-end
-
--- Wait for game to load
-if not game:IsLoaded() then
-    game.Loaded:Wait()
-end
-
--- Protected loading of Orion Library
-local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/shlexware/Orion/main/source")))()
-if not OrionLib then
-    warn("Failed to load Orion Library")
-    return
-end
-
--- Constants
-local NOTIFICATION_DURATION = 5
+-- Services
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
 
--- Create window
+-- Game Check
+if game.PlaceId ~= CONFIG.GAME_ID then return end
+if not game:IsLoaded() then game.Loaded:Wait() end
+
+-- Protected Loading
+local function loadOrionLibrary()
+    local success, library = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Orion/main/source"))()
+    end)
+    
+    if not success or not library then
+        warn("Failed to load Orion Library")
+        return nil
+    end
+    
+    return library
+end
+
+local OrionLib = loadOrionLibrary()
+if not OrionLib then return end
+
+-- Initialize Window
 local Window = OrionLib:MakeWindow({
-    Name = "Midnight Hub - Super Saiyan Simulator 2",
+    Name = CONFIG.UI.NAME,
     HidePremium = false,
     SaveConfig = true,
     ConfigFolder = "MidnightHubConfig"
 })
 
--- Welcome notification
+-- Welcome Notification
 OrionLib:MakeNotification({
     Name = "Welcome to Midnight Hub!",
-    Content = "Enjoy your automated experience.",
-    Image = "rbxassetid://4483345998",
-    Time = NOTIFICATION_DURATION
+    Content = "Scripted by Riotscripter (Modified to Midnight Hub)",
+    Image = CONFIG.UI.ICON,
+    Time = CONFIG.UI.NOTIFICATION_DURATION
 })
 
--- Initialize toggle states
+-- State Management
 local AutoStates = {
     AutoPunch = false,
     AutoEnergyBall = false,
     AutoRebirth = false,
     AutoPrestige = false,
     AutoTechnique = false,
-    AutoDrops = false
+    AutoDrops = false,
+    AutoMobs = {false, false, false, false, false},
+    AutoBosses = {false, false},
+    AutoTeleport = {
+        Mobs = false,
+        EventMobs = false,
+        Bosses = false
+    }
+}
+
+-- Utility Functions
+local Utility = {
+    isValidMob = function(mob)
+        if table.find(CONFIG.MOBS.EXCLUDED, mob.Name) then return false end
+        return mob:FindFirstChild("HumanoidRootPart") 
+            and mob:FindFirstChildWhichIsA("Humanoid") 
+            and mob:FindFirstChildWhichIsA("Humanoid").Health ~= 0
+    end,
+    
+    safeExecute = function(callback)
+        return function()
+            pcall(callback)
+        end
+    end
 }
 
 -- Auto Functions
-local function autoPunch()
-    while AutoStates.AutoPunch do
-        RunService.Heartbeat:Wait()
-        local args = {
-            [1] = {
-                Began = true,
-                CFrame = CFrame.new(1762.42431640625, 580.1317138671875, 1351.1337890625),
-                Aim = Vector3.new(1762.42431640625, 580.1317138671875, 1301.1337890625),
-                Camera = CFrame.new(1762.42431640625, 584.9469604492188, 1363.2078857421875) * CFrame.Angles(-0.261798232793808, 0, 0),
-                Type = 1,
-                SkillId = "1"
+local AutoFunctions = {
+    punch = function()
+        while AutoStates.AutoPunch do
+            RunService.Heartbeat:Wait()
+            local args = {
+                [1] = {
+                    Began = true,
+                    CFrame = CFrame.new(1762.42431640625, 580.1317138671875, 1351.1337890625),
+                    Aim = Vector3.new(1762.42431640625, 580.1317138671875, 1301.1337890625),
+                    Camera = CFrame.new(1762.42431640625, 584.9469604492188, 1363.2078857421875) * CFrame.Angles(-0.261798232793808, 0, 0),
+                    Type = 1,
+                    SkillId = "1"
+                }
             }
-        }
-        ReplicatedStorage.Remotes.SkillRemote:FireServer(unpack(args))
-    end
-end
+            ReplicatedStorage.Remotes.SkillRemote:FireServer(unpack(args))
+        end
+    end,
 
-local function autoEnergyBall()
-    while AutoStates.AutoEnergyBall do
-        RunService.Heartbeat:Wait()
-        local args = {
-            [1] = {
-                Began = true,
-                CFrame = CFrame.new(7110.30518, 731.7995, -10097.873, 0.694442809, -0.578470588, 0.427926362, -1.5264499e-08, 0.594715595, 0.803936183, -0.719547927, -0.55828768, 0.412995934),
-                Aim = Vector3.new(1478.2548828125, 589.2730712890625, -2828.173828125),
-                Camera = CFrame.new(7127.94629, 767.564453, -10080.8477, 0.694443047, -0.578470528, 0.427926153, -1.49011612e-08, 0.594715476, 0.803936243, -0.719547749, -0.558287919, 0.412995994),
-                Type = 1,
-                SkillId = "101"
+    energyBall = function()
+        while AutoStates.AutoEnergyBall do
+            RunService.Heartbeat:Wait()
+            local args = {
+                [1] = {
+                    Began = true,
+                    CFrame = CFrame.new(7110.30518, 731.7995, -10097.873, 0.694442809, -0.578470588, 0.427926362, -1.5264499e-08, 0.594715595, 0.803936183, -0.719547927, -0.55828768, 0.412995934),
+                    Aim = Vector3.new(1478.2548828125, 589.2730712890625, -2828.173828125),
+                    Camera = CFrame.new(7127.94629, 767.564453, -10080.8477, 0.694443047, -0.578470528, 0.427926153, -1.49011612e-08, 0.594715476, 0.803936243, -0.719547749, -0.558287919, 0.412995994),
+                    Type = 1,
+                    SkillId = "101"
+                }
             }
+            ReplicatedStorage.Remotes.SkillRemote:FireServer(unpack(args))
+        end
+    end,
+
+    rebirth = function()
+        while AutoStates.AutoRebirth do
+            RunService.Heartbeat:Wait()
+            ReplicatedStorage.Packages._Index["sleitnick_knit@1.4.7"].knit.Services.StatsService.RE.RebirthUp:FireServer()
+        end
+    end,
+
+    prestige = function()
+        while AutoStates.AutoPrestige do
+            RunService.Heartbeat:Wait()
+            local args = {
+                [1] = {
+                    RightButton = "Decline",
+                    Prompt = "PrestigeUp",
+                    Description = "Gain Prestige?\n(Rebirth,Power,SkillPoints will be reset!)",
+                    LeftButton = "Accept"
+                },
+                [2] = "Accept"
+            }
+            ReplicatedStorage.Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PromptService.RE.Prompt:FireServer(unpack(args))
+        end
+    end,
+
+    technique = function()
+        while AutoStates.AutoTechnique do
+            RunService.Heartbeat:Wait()
+            local args = {
+                [1] = {
+                    Began = true,
+                    CFrame = CFrame.new(7160.42285, 574.155029, -10087.2246, -0.815149486, 7.46256779e-10, -0.579250693, -3.31721992e-08, 1, 4.79698308e-08, 0.579250693, 5.83176032e-08, -0.815149486) * CFrame.Angles(-3.141592502593994, -1.2826416492462158, -3.141592502593994),
+                    Aim = Vector3.new(2123.014892578125, 590.3080444335938, 1790.3922119140625),
+                    Camera = CFrame.new(2083.916259765625, 594.6639404296875, 1759.2860107421875) * CFrame.Angles(-2.978764533996582, 0.4765561819076538, 3.0663747787475586),
+                    Type = 1,
+                    SkillId = "8"
+                }
+            }
+            ReplicatedStorage.Remotes.SkillRemote:FireServer(unpack(args))
+        end
+    end,
+
+    drops = function()
+        local CHEST_TYPES = {
+            "Chest_Common", "Chest_Epic", "Chest_Legendary", "Chest_Mythic",
+            "Chest_Raid", "Chest_Rare", "Chest_Uncommon", "Chest_Vanity"
         }
-        ReplicatedStorage.Remotes.SkillRemote:FireServer(unpack(args))
-    end
-end
 
-local function autoRebirth()
-    while AutoStates.AutoRebirth do
-        RunService.Heartbeat:Wait()
-        local statsService = ReplicatedStorage.Packages._Index["sleitnick_knit@1.4.7"].knit.Services.StatsService
-        statsService.RE.RebirthUp:FireServer()
-    end
-end
-
-local function autoDrops()
-    local CHEST_TYPES = {
-        "Chest_Common",
-        "Chest_Epic",
-        "Chest_Legendary",
-        "Chest_Mythic",
-        "Chest_Raid",
-        "Chest_Rare",
-        "Chest_Uncommon",
-        "Chest_Vanity"
-    }
-
-    while AutoStates.AutoDrops do
-        RunService.Heartbeat:Wait()
-        local partStorage = Workspace:FindFirstChild("PartStorage")
-        
-        if partStorage then
-            for _, chestName in ipairs(CHEST_TYPES) do
-                local chest = partStorage:FindFirstChild(chestName)
-                if chest and chest:FindFirstChild("Base") then
-                    local prompt = chest.Base:FindFirstChild("ProximityPrompt")
-                    if prompt then
-                        fireproximityprompt(prompt, math.huge)
+        while AutoStates.AutoDrops do
+            RunService.Heartbeat:Wait()
+            local partStorage = Workspace:FindFirstChild("PartStorage")
+            if partStorage then
+                for _, chestName in ipairs(CHEST_TYPES) do
+                    local chest = partStorage:FindFirstChild(chestName)
+                    if chest and chest:FindFirstChild("Base") then
+                        local prompt = chest.Base:FindFirstChild("ProximityPrompt")
+                        if prompt then
+                            fireproximityprompt(prompt, math.huge)
+                        end
                     end
                 end
             end
         end
+    end,
+}
+
+-- Mob Functions
+local MobFunctions = {
+    bringMobs = function(index, offsetPosition)
+        while AutoStates.AutoMobs[index] do
+            RunService.Heartbeat:Wait()
+            pcall(function()
+                for _, mob in next, Workspace["World Mobs"].Mobs:GetChildren() do
+                    if Utility.isValidMob(mob) then
+                        mob.HumanoidRootPart.Anchored = true
+                        if type(offsetPosition) == "function" then
+                            offsetPosition(mob)
+                        else
+                            mob.HumanoidRootPart.Position = Players.LocalPlayer.Character.HumanoidRootPart.Position + offsetPosition
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+
+    bringBosses = function(index)
+        while AutoStates.AutoBosses[index] do
+            RunService.Heartbeat:Wait()
+            pcall(function()
+                for _, boss in pairs(Workspace["World Mobs"]["Boss Mobs"]:GetChildren()) do
+                    if Utility.isValidMob(boss) then
+                        boss.HumanoidRootPart.Anchored = true
+                        if index == 1 then
+                            boss.HumanoidRootPart.Position = Players.LocalPlayer.Character.HumanoidRootPart.Position
+                        else
+                            boss.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -3)
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+
+    teleportTo = function(mobFolder)
+        return function()
+            for _, mob in next, mobFolder:GetChildren() do
+                if mob.Name ~= "Tutorial Dummy" and mob:FindFirstChild("HumanoidRootPart") then
+                    Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(mob.HumanoidRootPart.Position)
+                    RunService.Heartbeat:Wait()
+                end
+            end
+            RunService.Heartbeat:Wait(2.5)
+        end
     end
-end
+}
 
 -- Create Tabs
-local AutomationTab = Window:MakeTab({
-    Name = "Automation",
-    Icon = "rbxassetid://4483345998",
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = CONFIG.UI.ICON,
     PremiumOnly = false
 })
 
--- Add Toggles
-local function createToggle(name, callback)
-    AutomationTab:AddToggle({
+local MobTab = Window:MakeTab({
+    Name = "Mobs",
+    Icon = CONFIG.UI.ICON,
+    PremiumOnly = false
+})
+
+local BossTab = Window:MakeTab({
+    Name = "Bosses",
+    Icon = CONFIG.UI.ICON,
+    PremiumOnly = false
+})
+
+-- Add Main Toggles
+local function createMainToggle(name, state, callback)
+    MainTab:AddToggle({
         Name = "Auto " .. name,
         Default = false,
+        Save = true,
+        Flag = string.lower(name) .. "_sss2",
         Callback = function(Value)
-            AutoStates["Auto" .. name] = Value
+            AutoStates[state] = Value
             if Value then
                 task.spawn(callback)
             end
@@ -143,19 +279,75 @@ local function createToggle(name, callback)
     })
 end
 
-createToggle("Punch", autoPunch)
-createToggle("Energy Ball", autoEnergyBall)
-createToggle("Rebirth", autoRebirth)
-createToggle("Drops", autoDrops)
+createMainToggle("Punch", "AutoPunch", AutoFunctions.punch)
+createMainToggle("Energy Ball", "AutoEnergyBall", AutoFunctions.energyBall)
+createMainToggle("Rebirth", "AutoRebirth", AutoFunctions.rebirth)
+createMainToggle("Prestige", "AutoPrestige", AutoFunctions.prestige)
+createMainToggle("Technique", "AutoTechnique", AutoFunctions.technique)
+createMainToggle("Drops", "AutoDrops", AutoFunctions.drops)
 
--- Credits Tab
-local CreditsTab = Window:MakeTab({
-    Name = "Credits",
-    Icon = "rbxassetid://4483345998",
+-- Add Mob Toggles
+for i = 1, 5 do
+    MobTab:AddToggle({
+        Name = "Auto Mobs " .. (i == 1 and "" or i),
+        Default = false,
+        Save = true,
+        Flag = "automobs" .. i .. "_sss2",
+        Callback = function(Value)
+            AutoStates.AutoMobs[i] = Value
+            if Value then
+                task.spawn(function()
+                    MobFunctions.bringMobs(i, CONFIG.MOBS.OFFSET_POSITIONS["POSITION_" .. i] or Vector3.new(0, 0, 0))
+                end)
+            end
+        end
+    })
+end
+
+-- Add Boss Toggles
+for i = 1, 2 do
+    BossTab:AddToggle({
+        Name = "Auto Bosses " .. (i == 1 and "" or i),
+        Default = false,
+        Save = true,
+        Flag = "autobosses" .. i .. "_sss2",
+        Callback = function(Value)
+            AutoStates.AutoBosses[i] = Value
+            if Value then
+                task.spawn(function()
+                    MobFunctions.bringBosses(i)
+                end)
+            end
+        end
+    })
+end
+
+-- Add Teleport Toggles
+local TeleportTab = Window:MakeTab({
+    Name = "Teleport",
+    Icon = CONFIG.UI.ICON,
     PremiumOnly = false
 })
 
-CreditsTab:AddParagraph("Credits", "Scripted by Riotscripter (Modified to Midnight Hub).")
+local function createTeleportToggle(name, folder)
+    TeleportTab:AddToggle({
+        Name = "Auto Teleport " .. name,
+        Default = false,
+        Save = true,
+        Flag = "autotp" .. string.lower(name) .. "_sss2",
+        Callback = function(Value)
+            AutoStates.AutoTeleport[name] = Value
+            while AutoStates.AutoTeleport[name] do
+                MobFunctions.teleportTo(folder)()
+                RunService.Heartbeat:Wait()
+            end
+        end
+    })
+end
 
--- Initialize the UI
+createTeleportToggle("Mobs", Workspace["World Mobs"].Mobs)
+createTeleportToggle("Event Mobs", Workspace["World Mobs"]["Event Mobs"])
+createTeleportToggle("Bosses", Workspace["World Mobs"]["Boss Mobs"])
+
+-- Initialize
 OrionLib:Init()
