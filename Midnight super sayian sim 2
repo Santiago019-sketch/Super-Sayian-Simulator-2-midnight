@@ -2171,7 +2171,6 @@ Name = "Credits",
 
 Tab:AddLabel("Script is made by Midnight Hub")
 Tab:AddLabel("Scripted by Midnight Hub!")
-Tab:AddLabel("UI Library by Midnight Hub!")
 Tab:AddLabel("Credits to Chaosscripter!")
 
 Tab:AddParagraph("Info","Tap The Button To Copy My Social And Invite Links!")
@@ -2180,25 +2179,17 @@ Tab:AddParagraph("Info","Script changelogs at our Discord Server. If you find an
 Tab:AddButton({
 Name = "Discord",
 Callback = function()
-setclipboard("https://discord.gg/kKaZEfW7zv")
+setclipboard("https://discord.gg/YpfSjRG2YD")
 print("Midnight Hub: Copied Discord Server Invite to Clipboard.")
 OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Discord Server Invite to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
 end
 })
 
-Tab:AddButton({
-Name = "Youtube",
-Callback = function()
-setclipboard("https://m.youtube.com/channel/UCvXEiClhdiICCgSVzkEIT3A")
-print("Midnight Hub: Copied Youtube Channel Link to Clipboard.")
-OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Youtube Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
-end
-})
 
 Tab:AddButton({
 Name = "Github",
 Callback = function()
-setclipboard("https://github.com/Chaosscripter")
+setclipboard("https://github.com/Santiago019-sketch")
 print("Midnight Hub: Copied Github Channel Link to Clipboard.")
 OrionLib:MakeNotification({Name = "Midnight Hub", Content = "Copied Github Channel Link to Clipboard.", Image = "rbxassetid://4370317928", Time = 2})
 end
