@@ -1,0 +1,167 @@
+if game.PlaceId == 16784977282 then -- World 1 Check
+    if not game:IsLoaded() then
+        game.Loaded:Wait() -- Wait for the game to load
+    end
+
+    -- Load Orion Library
+    local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/shlexware/Orion/main/source")))()
+    local Window = OrionLib:MakeWindow({
+        Name = "Midnight Hub - Super Saiyan Simulator 2",
+        HidePremium = false,
+        SaveConfig = true,
+        ConfigFolder = "MidnightHubConfig"
+    })
+
+    -- Notification
+    OrionLib:MakeNotification({
+        Name = "Welcome to Midnight Hub!",
+        Content = "Enjoy your automated experience.",
+        Image = "rbxassetid://4483345998",
+        Time = 5
+    })
+
+    -- Toggles
+    local MyTable = {
+        ["AutoPunch"] = false,
+        ["AutoEnergyBall"] = false,
+        ["AutoRebirth"] = false,
+        ["AutoPrestige"] = false,
+        ["AutoTechnique"] = false,
+        ["AutoDrops"] = false,
+    }
+
+    getgenv().AutoPunch = false
+    getgenv().AutoEnergyBall = false
+    getgenv().AutoRebirth = false
+    getgenv().AutoPrestige = false
+    getgenv().AutoTechnique = false
+    getgenv().AutoDrops = false
+
+    -- Auto Functions
+    function autopunch()
+        while getgenv().AutoPunch do
+            game:GetService("RunService").Heartbeat:Wait()
+            local args = {
+                [1] = {
+                    ["Began"] = true,
+                    ["CFrame"] = CFrame.new(1762.42431640625, 580.1317138671875, 1351.1337890625) * CFrame.Angles(0, 0, 0),
+                    ["Aim"] = Vector3.new(1762.42431640625, 580.1317138671875, 1301.1337890625),
+                    ["Camera"] = CFrame.new(1762.42431640625, 584.9469604492188, 1363.2078857421875) * CFrame.Angles(-0.261798232793808, 0, 0),
+                    ["Type"] = 1,
+                    ["SkillId"] = "1"
+                }
+            }
+            game:GetService("ReplicatedStorage").Remotes.SkillRemote:FireServer(unpack(args))
+        end
+    end
+
+    function autoenergyball()
+        while getgenv().AutoEnergyBall do
+            game:GetService("RunService").Heartbeat:Wait()
+            local args = {
+                [1] = {
+                    ["Began"] = true,
+                    ["CFrame"] = CFrame.new(7110.30518, 731.7995, -10097.873, 0.694442809, -0.578470588, 0.427926362, -1.5264499e-08, 0.594715595, 0.803936183, -0.719547927, -0.55828768, 0.412995934),
+                    ["Aim"] = Vector3.new(1478.2548828125, 589.2730712890625, -2828.173828125),
+                    ["Camera"] = CFrame.new(7127.94629, 767.564453, -10080.8477, 0.694443047, -0.578470528, 0.427926153, -1.49011612e-08, 0.594715476, 0.803936243, -0.719547749, -0.558287919, 0.412995994),
+                    ["Type"] = 1,
+                    ["SkillId"] = "101"
+                }
+            }
+            game:GetService("ReplicatedStorage").Remotes.SkillRemote:FireServer(unpack(args))
+        end
+    end
+
+    function autorebirth()
+        while getgenv().AutoRebirth do
+            game:GetService("RunService").Heartbeat:Wait()
+            game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.StatsService.RE.RebirthUp:FireServer()
+        end
+    end
+
+    function autodrops()
+        while getgenv().AutoDrops do
+            game:GetService("RunService").Heartbeat:Wait()
+            local paths = {
+                "Chest_Common",
+                "Chest_Epic",
+                "Chest_Legendary",
+                "Chest_Mythic",
+                "Chest_Raid",
+                "Chest_Rare",
+                "Chest_Uncommon",
+                "Chest_Vanity",
+            }
+
+            for i, chestName in ipairs(paths) do
+                local chest = game:GetService("Workspace"):FindFirstChild("PartStorage") and game:GetService("Workspace").PartStorage:FindFirstChild(chestName)
+                if chest and chest:FindFirstChild("Base") and chest.Base:FindFirstChild("ProximityPrompt") then
+                    fireproximityprompt(chest.Base.ProximityPrompt, math.huge)
+                end
+            end
+        end
+    end
+
+    -- Tabs and Toggles
+    local AutomationTab = Window:MakeTab({
+        Name = "Automation",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    })
+
+    AutomationTab:AddToggle({
+        Name = "Auto Punch",
+        Default = false,
+        Callback = function(Value)
+            getgenv().AutoPunch = Value
+            if Value then
+                task.spawn(autopunch)
+            end
+        end
+    })
+
+    AutomationTab:AddToggle({
+        Name = "Auto Energy Ball",
+        Default = false,
+        Callback = function(Value)
+            getgenv().AutoEnergyBall = Value
+            if Value then
+                task.spawn(autoenergyball)
+            end
+        end
+    })
+
+    AutomationTab:AddToggle({
+        Name = "Auto Rebirth",
+        Default = false,
+        Callback = function(Value)
+            getgenv().AutoRebirth = Value
+            if Value then
+                task.spawn(autorebirth)
+            end
+        end
+    })
+
+    AutomationTab:AddToggle({
+        Name = "Auto Drops",
+        Default = false,
+        Callback = function(Value)
+            getgenv().AutoDrops = Value
+            if Value then
+                task.spawn(autodrops)
+            end
+        end
+    })
+
+    -- Credits Tab
+    local CreditsTab = Window:MakeTab({
+        Name = "Credits",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    })
+
+    CreditsTab:AddParagraph("Credits", "Scripted by Riotscripter (Modified to Midnight Hub).")
+
+    -- Load UI
+    OrionLib:Init()
+end
